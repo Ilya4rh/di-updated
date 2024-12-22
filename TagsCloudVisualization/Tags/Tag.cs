@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization.Tags;
 
-public class Tag : ITag
+public class Tag
 {
     public Tag(string content, int size, Rectangle rectangle, FontFamily font)
     {
