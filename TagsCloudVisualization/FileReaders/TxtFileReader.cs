@@ -4,11 +4,11 @@ public class TxtFileReader : IFileReader
 {
     public bool CanRead(string pathToFile)
     {
-        throw new NotImplementedException();
+        return pathToFile.Split('.')[^1] == "txt";
     }
 
-    public string Read(string pathToFile)
+    public string[] Read(string pathToFile)
     {
-        throw new NotImplementedException();
+        return File.ReadAllText(pathToFile).Split(Environment.NewLine);
     }
 }
