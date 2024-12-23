@@ -6,5 +6,5 @@ public interface ITextHandler
     /// Метод-обработчик исходного текста
     /// </summary>
     /// <returns> Словарь: слово - количество </returns>
-    Dictionary<string, int> HandleText();
+    Dictionary<string, int> GetWordsCount();
 }

@@ -11,7 +11,7 @@ public class TextHandler : ITextHandler
         this.fileReader = fileReader;
     }
 
-    public Dictionary<string, int> HandleText()
+    public Dictionary<string, int> GetWordsCount()
     {
         throw new NotImplementedException();
     }
