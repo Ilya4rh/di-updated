@@ -4,5 +4,5 @@ public interface IFileReader
 {
     bool CanRead(string pathToFile);
 
-    string[] Read(string pathToFile);
+    List<string> Read(string pathToFile);
 }

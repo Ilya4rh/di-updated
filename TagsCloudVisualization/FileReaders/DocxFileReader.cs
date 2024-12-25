@@ -1,4 +1,5 @@
-﻿using Xceed.Words.NET;
+﻿using System.Text.RegularExpressions;
+using Xceed.Words.NET;
 
 namespace TagsCloudVisualization.FileReaders;
 
@@ -9,10 +10,19 @@ public class DocxFileReader : IFileReader
         return path.Split('.')[^1] == "docx";
     }
 
-    public string[] Read(string path)
+    public List<string> Read(string path)
     {
+        var words = new List<string>();
         var doc = DocX.Load(path);
         
-        return doc.Paragraphs.Select(p => p.Text).ToArray();
+        foreach (var paragraph in doc.Paragraphs)
+        {
+            var wordsInParagraph = Regex.Matches(paragraph.Text, @"\b\w+\b")
+                .Select(word => word.Value);
+            
+            words.AddRange(wordsInParagraph);
+        }
+        
+        return words;
     }
 }

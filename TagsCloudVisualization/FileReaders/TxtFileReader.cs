@@ -1,4 +1,6 @@
-﻿namespace TagsCloudVisualization.FileReaders;
+﻿using System.Text.RegularExpressions;
+
+namespace TagsCloudVisualization.FileReaders;
 
 public class TxtFileReader : IFileReader
 {
@@ -7,8 +9,20 @@ public class TxtFileReader : IFileReader
         return pathToFile.Split('.')[^1] == "txt";
     }
 
-    public string[] Read(string pathToFile)
+    public List<string> Read(string pathToFile)
     {
-        return File.ReadAllText(pathToFile).Split(Environment.NewLine);
+        var words = new List<string>();
+        var paragraphs = File.ReadAllText(pathToFile)
+            .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var paragraph in paragraphs)
+        {
+            var wordsInParagraph = Regex.Matches(paragraph, @"\b\w+\b")
+                .Select(word => word.Value);
+            
+            words.AddRange(wordsInParagraph);
+        }
+        
+        return words;
     }
 }
