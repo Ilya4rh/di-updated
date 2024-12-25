@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
-using Xceed.Words.NET;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace TagsCloudVisualization.FileReaders;
 
@@ -13,16 +14,17 @@ public class DocxFileReader : IFileReader
     public List<string> Read(string path)
     {
         var words = new List<string>();
-        var doc = DocX.Load(path);
-        
-        foreach (var paragraph in doc.Paragraphs)
-        {
-            var wordsInParagraph = Regex.Matches(paragraph.Text, @"\b\w+\b")
-                .Select(word => word.Value);
+
+        using var wordDocument = WordprocessingDocument.Open(path, false);
+        var body = wordDocument.MainDocumentPart.Document.Body;
             
-            words.AddRange(wordsInParagraph);
+        foreach (var text in body.Descendants<Text>())
+        {
+            var wordsInText = Regex.Matches(text.Text, @"\b\w+\b")
+                .Select(match => match.Value);
+            words.AddRange(wordsInText);
         }
-        
+
         return words;
     }
 }

@@ -19,7 +19,7 @@ public class DocFileReader : IFileReader
         doc.LoadFromFile(pathToFile);
         
         var text = doc.GetText();
-        var paragraphs = text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+        var paragraphs = text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).Skip(1);
         
         foreach (var paragraph in paragraphs)
         {

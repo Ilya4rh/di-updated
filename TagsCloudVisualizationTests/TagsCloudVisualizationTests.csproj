@@ -12,7 +12,23 @@
 
     <ItemGroup>
       <PackageReference Include="FluentAssertions" Version="8.0.0-alpha.1" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
       <PackageReference Include="NUnit" Version="4.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="FileReaderTests\FilesForTests\fileTxt.txt" />
+      <Content Include="FileReaderTests\FilesForTests\fileTxt.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="FileReaderTests\FilesForTests\fileDoc.doc" />
+      <Content Include="FileReaderTests\FilesForTests\fileDoc.doc">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="FileReaderTests\FilesForTests\fileDocx.docx" />
+      <Content Include="FileReaderTests\FilesForTests\fileDocx.docx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
