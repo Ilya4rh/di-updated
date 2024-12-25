@@ -4,7 +4,7 @@ public class CircularLayoutAlgorithmSettings
 {
     public const double OneDegree = Math.PI / 180;
     
-    public CircularLayoutAlgorithmSettings(double stepIncreasingAngle, double stepIncreasingRadius)
+    public CircularLayoutAlgorithmSettings(double stepIncreasingAngle = OneDegree, int stepIncreasingRadius = 1)
     {
         StepIncreasingAngle = stepIncreasingAngle;
         StepIncreasingRadius = stepIncreasingRadius;
@@ -12,5 +12,5 @@ public class CircularLayoutAlgorithmSettings
 
     public double StepIncreasingAngle { get; }
     
-    public double StepIncreasingRadius { get; }
+    public int StepIncreasingRadius { get; }
 }

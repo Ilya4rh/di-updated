@@ -2,6 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudVisualization.LayoutAlgorithms;
+using TagsCloudVisualization.Settings;
 using TagsCloudVisualizationTests.Utils;
 
 namespace TagsCloudVisualizationTests;
@@ -13,9 +14,11 @@ public class CircularLayoutAlgorithmTests
     [TestCase(-5)]
     public void Constructor_ShouldArgumentException_WhenStepIncreasingRadiusHasInvalidValue(int stepIncreasingRadius)
     {
+        var settings = new CircularLayoutAlgorithmSettings(stepIncreasingRadius: stepIncreasingRadius);
+        
         var action = () =>
         {
-            _ = new CircularLayoutAlgorithm(new Point(0, 0), stepIncreasingRadius: stepIncreasingRadius);
+            _ = new CircularLayoutAlgorithm(new Point(0, 0), settings);
         };
 
         action
@@ -27,9 +30,11 @@ public class CircularLayoutAlgorithmTests
     [Test]
     public void Constructor_ShouldArgumentException_WhenStepIncreasingAngleIsZero()
     {
+        var settings = new CircularLayoutAlgorithmSettings(stepIncreasingAngle: 0);
+        
         var action = () =>
         {
-            _ = new CircularLayoutAlgorithm(new Point(0, 0), stepIncreasingAngle: 0);
+            _ = new CircularLayoutAlgorithm(new Point(0, 0), settings);
         };
 
         action
@@ -43,7 +48,7 @@ public class CircularLayoutAlgorithmTests
     public void CalculateNextPoint_ShouldPointIsCenter_WhenCalculateFirstPoint(int centerCoordinateX, int centerCoordinateY)
     {
         var center = new Point(centerCoordinateY, centerCoordinateY);
-        var circularLayoutAlgorithm = new CircularLayoutAlgorithm(center);
+        var circularLayoutAlgorithm = new CircularLayoutAlgorithm(center, new CircularLayoutAlgorithmSettings());
 
         var nextPoint = circularLayoutAlgorithm.CalculateNextPoint();
 
@@ -54,8 +59,9 @@ public class CircularLayoutAlgorithmTests
     [TestCase(7)]
     public void CalculateNextPoint_ShouldIncreaseRadius_WhenCalculateTwoPoints(int stepIncreasingRadius)
     {
+        var settings = new CircularLayoutAlgorithmSettings(stepIncreasingRadius: stepIncreasingRadius);
         var circularLayoutAlgorithm =
-            new CircularLayoutAlgorithm(new Point(0, 0), stepIncreasingRadius: stepIncreasingRadius);
+            new CircularLayoutAlgorithm(new Point(0, 0), settings);
 
         var firstPoint = circularLayoutAlgorithm.CalculateNextPoint();
         var secondPoint = circularLayoutAlgorithm.CalculateNextPoint();
@@ -72,9 +78,7 @@ public class CircularLayoutAlgorithmTests
         var center = new Point(0, 0);
         var circularLayoutAlgorithm = new CircularLayoutAlgorithm(
             center,
-            stepIncreasingRadius: stepIncreasingRadius,
-            stepIncreasingAngle: stepIncreasingAngle
-            );
+            new CircularLayoutAlgorithmSettings(stepIncreasingAngle, stepIncreasingRadius));
         
         _ = circularLayoutAlgorithm.CalculateNextPoint();
         var secondPoint = circularLayoutAlgorithm.CalculateNextPoint();

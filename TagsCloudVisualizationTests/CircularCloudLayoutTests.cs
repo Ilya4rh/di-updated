@@ -1,11 +1,9 @@
 ﻿using System.Drawing;
-using System.Drawing.Imaging;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.CircularCloudLayouters;
 using TagsCloudVisualization.LayoutAlgorithms;
-using TagsCloudVisualization.Visualization;
+using TagsCloudVisualization.Settings;
 using TagsCloudVisualizationTests.Utils;
 
 namespace TagsCloudVisualizationTests;
@@ -20,7 +18,8 @@ public class CircularCloudLayoutTests
     public void Setup()
     {
         var center = new Point(0, 0);
-        cloudLayouter = new CircularCloudLayouter(new CircularLayoutAlgorithm(center));
+        cloudLayouter =
+            new CircularCloudLayouter(new CircularLayoutAlgorithm(center, new CircularLayoutAlgorithmSettings()));
         addedRectangles = [];
     }
 

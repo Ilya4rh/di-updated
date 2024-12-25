@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagsCloudVisualization.Settings;
 
 namespace TagsCloudVisualization.LayoutAlgorithms;
 
@@ -12,16 +13,16 @@ public class CircularLayoutAlgorithm : ILayoutAlgorithm
     private const double OneDegree = Math.PI / 180;
     private const double FullCircleRotation = 2 * Math.PI;
 
-    public CircularLayoutAlgorithm(Point center, double stepIncreasingAngle = OneDegree, int stepIncreasingRadius = 1)
+    public CircularLayoutAlgorithm(Point center, CircularLayoutAlgorithmSettings settings)
     {
-        if (stepIncreasingRadius <= 0)
+        if (settings.StepIncreasingRadius <= 0)
             throw new ArgumentException("The parameter 'stepIncreasingRadius' is less than or equal to zero");
-        if (stepIncreasingAngle == 0)
+        if (settings.StepIncreasingAngle == 0)
             throw new ArgumentException("The parameter 'stepIncreasingAngle' is zero");
 
         this.center = center;
-        this.stepIncreasingAngle = stepIncreasingAngle;
-        this.stepIncreasingRadius = stepIncreasingRadius;
+        stepIncreasingAngle = settings.StepIncreasingAngle;
+        stepIncreasingRadius = settings.StepIncreasingRadius;
     }
 
     public Point CalculateNextPoint()
