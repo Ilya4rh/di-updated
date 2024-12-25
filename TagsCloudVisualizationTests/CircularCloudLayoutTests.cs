@@ -1,9 +1,11 @@
 ﻿using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using TagsCloudVisualization.CircularCloudLayouters;
 using TagsCloudVisualization.LayoutAlgorithms;
 using TagsCloudVisualization.Settings;
+using TagsCloudVisualization.Visualization;
 using TagsCloudVisualizationTests.Utils;
 
 namespace TagsCloudVisualizationTests;
@@ -21,30 +23,30 @@ public class CircularCloudLayoutTests
             new CircularCloudLayouter(new CircularLayoutAlgorithm(new CircularLayoutAlgorithmSettings()));
         addedRectangles = [];
     }
-
-    // Нужно переделать, так как изменился контракт отрисовки изображения
     
-    // [TearDown]
-    // public void TearDown()
-    // {
-    //     if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) 
-    //         return;
-    //     
-    //     var pathImageStored = TestContext.CurrentContext.TestDirectory + @"\imageFailedTests";
-    //
-    //     if (!Directory.Exists(pathImageStored))
-    //     {
-    //         Directory.CreateDirectory(pathImageStored);
-    //     }
-    //
-    //     var testName = TestContext.CurrentContext.Test.Name;
-    //     
-    //     var bitmap = ImageDrawer.DrawLayout(addedRectangles, 10);
-    //         
-    //     ImageSaver.Save(bitmap, pathImageStored, $"{testName}.png", ImageFormat.Png);
-    //     
-    //     Console.WriteLine($@"Tag cloud visualization saved to file {pathImageStored}\{testName}.png");
-    // }
+    [TearDown]
+    public void TearDown()
+    {
+        if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) 
+            return;
+        
+        var pathImageStored = TestContext.CurrentContext.TestDirectory + @"\imageFailedTests";
+    
+        if (!Directory.Exists(pathImageStored))
+        {
+            Directory.CreateDirectory(pathImageStored);
+        }
+    
+        var testName = TestContext.CurrentContext.Test.Name;
+        
+        var bitmap = ImageDrawerUtils.DrawLayout(addedRectangles, 10);
+        
+        var imageSaver = new ImageSaver(new ImageSaverSettings(pathImageStored, testName, "png"));
+            
+        imageSaver.Save(bitmap);
+        
+        Console.WriteLine($@"Tag cloud visualization saved to file {pathImageStored}\{testName}.png");
+    }
     
     [TestCase(10, 5, 15)]
     [TestCase(50, 30, 100)]
