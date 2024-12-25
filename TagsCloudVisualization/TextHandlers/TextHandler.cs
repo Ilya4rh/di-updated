@@ -5,30 +5,25 @@ namespace TagsCloudVisualization.TextHandlers;
 
 public class TextHandler : ITextHandler
 {
-    private readonly IEnumerable<string> words;
-    private readonly HashSet<string> boringWords;
     private readonly IFileReader[] readers;
+    private readonly TextHandlerSettings settings;
 
     public TextHandler(IFileReader[] readers, TextHandlerSettings settings)
     {
         this.readers = readers;
-        var reader = GetReader(settings.PathToText);
-
-        words = reader.Read(settings.PathToText);
-        
-        var boringWordsReader = GetReader(settings.PathToBoringWords);
-
-        boringWords = boringWordsReader.Read(settings.PathToBoringWords).ToHashSet();
+        this.settings = settings;
     }
 
     public Dictionary<string, int> GetWordsCount()
     {
+        var reader = GetReader(settings.PathToText);
+        var words = reader.Read(settings.PathToText);
+        var boringWordsReader = GetReader(settings.PathToBoringWords);
+        var boringWords = boringWordsReader.Read(settings.PathToBoringWords).ToHashSet();
         var wordsCount = new Dictionary<string, int>();
 
-        foreach (var word in words)
+        foreach (var lowerWord in words.Select(word => word.ToLower()))
         {
-            var lowerWord = word.ToLower();
-            
             if (wordsCount.TryGetValue(lowerWord, out var value))
             {
                 wordsCount[lowerWord] = ++value;
@@ -40,7 +35,9 @@ public class TextHandler : ITextHandler
             }
         }
 
-        return wordsCount;
+        return wordsCount
+            .OrderByDescending(p => p.Value)
+            .ToDictionary();
     }
     
     private IFileReader GetReader(string path)

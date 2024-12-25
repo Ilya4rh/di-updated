@@ -27,13 +27,10 @@ public class TagLayouter : ITagLayouter
     public IEnumerable<Tag> GetTags()
     {
         var wordsCount = textHandler.GetWordsCount();
-        var sortedWords = wordsCount
-            .OrderByDescending(p => p.Value)
-            .ToList();
-        var maxWordCount = sortedWords.First().Value;
-        var minWordCount = sortedWords.Last().Value;
+        var maxWordCount = wordsCount.First().Value;
+        var minWordCount = wordsCount.Last().Value;
         
-        foreach (var wordWithCount in sortedWords)
+        foreach (var wordWithCount in wordsCount)
         {
             var fontSize = GetFontSize(minWordCount, maxWordCount, wordWithCount.Value);
             yield return new Tag(wordWithCount.Key, 

@@ -1,28 +1,19 @@
-﻿using System.Text.RegularExpressions;
-
-namespace TagsCloudVisualization.FileReaders;
+﻿namespace TagsCloudVisualization.FileReaders;
 
 public class TxtFileReader : IFileReader
 {
     public bool CanRead(string pathToFile)
     {
-        return pathToFile.Split('.')[^1] == "txt";
+        return pathToFile.Split('.')[^1].Equals("txt", StringComparison.CurrentCultureIgnoreCase);
     }
 
     public List<string> Read(string pathToFile)
     {
-        var words = new List<string>();
         var paragraphs = File.ReadAllText(pathToFile)
             .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
 
-        foreach (var paragraph in paragraphs)
-        {
-            var wordsInParagraph = Regex.Matches(paragraph, @"\b\w+\b")
-                .Select(word => word.Value);
-            
-            words.AddRange(wordsInParagraph);
-        }
+        var wordsInText = WordsHandlerHelper.GetWordsInText(paragraphs);
         
-        return words;
+        return wordsInText;
     }
 }
