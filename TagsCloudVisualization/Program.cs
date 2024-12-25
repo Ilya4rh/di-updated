@@ -1,14 +1,15 @@
-﻿using System.Drawing.Imaging;
-using Autofac;
+﻿using Autofac;
+using CommandLine;
 using TagsCloudVisualization;
 using TagsCloudVisualization.Di;
 using TagsCloudVisualization.Visualization;
 
-var container = DiContainer.Configure();
+var commandLineOptions = Parser.Default.ParseArguments<CommandLineOptions>(args).Value;
+var container = DiContainer.Configure(commandLineOptions);
 var cloudCreator = container.Resolve<TagCloudCreator>();
 
 var image = cloudCreator.CreateImage();
 
-ImageSaver.Save(image, "", "", ImageFormat.Png);
+var imageSaver = container.Resolve<ImageSaver>();
 
-Console.WriteLine("Hello, World!");
+imageSaver.Save(image);
