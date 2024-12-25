@@ -4,7 +4,7 @@ public class TxtFileReader : IFileReader
 {
     public bool CanRead(string pathToFile)
     {
-        return pathToFile.Split('.')[^1].Equals("txt", StringComparison.CurrentCultureIgnoreCase);
+        return pathToFile.Split('.')[^1].Equals("txt", StringComparison.InvariantCultureIgnoreCase);
     }
 
     public List<string> Read(string pathToFile)

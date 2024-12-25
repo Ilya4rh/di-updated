@@ -6,7 +6,7 @@ public class DocFileReader : IFileReader
 {
     public bool CanRead(string pathToFile)
     {
-        return pathToFile.Split('.')[^1].Equals("doc", StringComparison.CurrentCultureIgnoreCase);
+        return pathToFile.Split('.')[^1].Equals("doc", StringComparison.InvariantCultureIgnoreCase);
     }
 
     public List<string> Read(string pathToFile)

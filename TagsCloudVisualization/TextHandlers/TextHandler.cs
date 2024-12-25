@@ -35,9 +35,13 @@ public class TextHandler : ITextHandler
             }
         }
 
-        return wordsCount
-            .OrderByDescending(p => p.Value)
-            .ToDictionary();
+        return words
+            .Select(word => word.ToLower())
+            .Where(word => !boringWords.Contains(word))
+            .GroupBy(word => word)
+            .ToDictionary(group => group.Key, group => group.Count())
+            .OrderByDescending(pair => pair.Value)
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
     }
     
     private IFileReader GetReader(string path)
