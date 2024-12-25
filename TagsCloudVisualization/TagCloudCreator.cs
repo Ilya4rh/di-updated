@@ -17,6 +17,9 @@ public class TagCloudCreator
 
     public Bitmap CreateImage()
     {
-        throw new NotImplementedException();
+        var tags = tagLayouter.GetTags();
+        var bitmap = imageDrawer.Draw(tags);
+
+        return bitmap;
     }
 }
