@@ -16,9 +16,9 @@ public class DocxFileReader : IFileReader
         var words = new List<string>();
 
         using var wordDocument = WordprocessingDocument.Open(path, false);
-        var body = wordDocument.MainDocumentPart.Document.Body;
+        var body = wordDocument.MainDocumentPart?.Document.Body;
             
-        foreach (var text in body.Descendants<Text>())
+        foreach (var text in body?.Descendants<Text>()!)
         {
             var wordsInText = Regex.Matches(text.Text, @"\b\w+\b")
                 .Select(match => match.Value);
