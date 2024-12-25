@@ -63,6 +63,7 @@ public class DiContainer
         builder.RegisterType<ColorGenerator.ColorGenerator>().As<IColorGenerator>();
         builder.RegisterType<TxtFileReader>().As<IFileReader>();
         builder.RegisterType<DocFileReader>().As<IFileReader>();
+        builder.RegisterType<DocxFileReader>().As<IFileReader>();
         builder.RegisterType<ImageDrawer>().As<IImageDrawer>();
         builder.RegisterType<ImageSaver>().As<IImageSaver>();
         builder.RegisterType<TextHandler>().As<ITextHandler>();
