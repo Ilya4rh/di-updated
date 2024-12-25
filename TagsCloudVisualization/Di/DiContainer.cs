@@ -18,7 +18,7 @@ public class DiContainer
         
         builder.RegisterType<BackgroundSettings>().WithParameters(new[]
         {
-            new NamedParameter("backgroundColor", options.BackgroundColor)
+            new NamedParameter("colorName", options.BackgroundColor)
         });
         
         builder.RegisterType<CircularLayoutAlgorithmSettings>().WithParameters(new[]
@@ -29,27 +29,27 @@ public class DiContainer
         
         builder.RegisterType<ColorGeneratorSettings>().WithParameters(new[]
         {
-            new NamedParameter("color", options.Color)
+            new NamedParameter("colorName", options.Color)
         });
 
         builder.RegisterType<ImageSaverSettings>().WithParameters(new[]
         {
-            new NamedParameter("pathToSaveDirectory", options.PathToSaveDirectory),
+            new NamedParameter("filePath", options.PathToSaveDirectory),
             new NamedParameter("fileName", options.FileName),
             new NamedParameter("fileFormat", options.FileFormat)
         });
         
         builder.RegisterType<ImageSettings>().WithParameters(new[]
         {
-            new NamedParameter("imageWidth", options.ImageWidth),
-            new NamedParameter("imageHeight", options.ImageHeight)
+            new NamedParameter("width", options.ImageWidth),
+            new NamedParameter("height", options.ImageHeight)
         });
         
         builder.RegisterType<TagLayouterSettings>().WithParameters(new[]
         {
-            new NamedParameter("font", options.Font),
-            new NamedParameter("minFontSize", options.MinFontSize),
-            new NamedParameter("maxFontSize", options.MaxFontSize)
+            new NamedParameter("fontName", options.Font),
+            new NamedParameter("minSize", options.MinFontSize),
+            new NamedParameter("maxSize", options.MaxFontSize)
         });
         
         builder.RegisterType<TextHandlerSettings>().WithParameters(new[]
@@ -62,10 +62,11 @@ public class DiContainer
         builder.RegisterType<CircularCloudLayouter>().As<ICircularCloudLayouter>();
         builder.RegisterType<ColorGenerator.ColorGenerator>().As<IColorGenerator>();
         builder.RegisterType<TxtFileReader>().As<IFileReader>();
-        builder.RegisterType<TagLayouter>().As<ITagLayouter>();
-        builder.RegisterType<TextHandler>().As<ITextHandler>();
+        builder.RegisterType<DocFileReader>().As<IFileReader>();
         builder.RegisterType<ImageDrawer>().As<IImageDrawer>();
         builder.RegisterType<ImageSaver>().As<IImageSaver>();
+        builder.RegisterType<TextHandler>().As<ITextHandler>();
+        builder.RegisterType<TagLayouter>().As<ITagLayouter>();
         builder.RegisterType<TagCloudCreator>();
         
         return builder.Build();

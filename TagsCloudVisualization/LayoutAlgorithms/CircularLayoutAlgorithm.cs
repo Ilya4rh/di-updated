@@ -10,17 +10,16 @@ public class CircularLayoutAlgorithm : ILayoutAlgorithm
     private readonly int stepIncreasingRadius;
     private double currentAngleOfCircle;
     private double currentRadiusOfCircle;
-    private const double OneDegree = Math.PI / 180;
     private const double FullCircleRotation = 2 * Math.PI;
 
-    public CircularLayoutAlgorithm(Point center, CircularLayoutAlgorithmSettings settings)
+    public CircularLayoutAlgorithm(CircularLayoutAlgorithmSettings settings)
     {
         if (settings.StepIncreasingRadius <= 0)
             throw new ArgumentException("The parameter 'stepIncreasingRadius' is less than or equal to zero");
         if (settings.StepIncreasingAngle == 0)
             throw new ArgumentException("The parameter 'stepIncreasingAngle' is zero");
 
-        this.center = center;
+        center = new Point(0, 0);
         stepIncreasingAngle = settings.StepIncreasingAngle;
         stepIncreasingRadius = settings.StepIncreasingRadius;
     }

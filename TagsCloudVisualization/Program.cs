@@ -10,6 +10,6 @@ var cloudCreator = container.Resolve<TagCloudCreator>();
 
 var image = cloudCreator.CreateImage();
 
-var imageSaver = container.Resolve<ImageSaver>();
+var imageSaver = container.Resolve<IImageSaver>();
 
 imageSaver.Save(image);

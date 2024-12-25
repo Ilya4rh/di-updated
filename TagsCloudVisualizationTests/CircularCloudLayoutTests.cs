@@ -17,9 +17,8 @@ public class CircularCloudLayoutTests
     [SetUp]
     public void Setup()
     {
-        var center = new Point(0, 0);
         cloudLayouter =
-            new CircularCloudLayouter(new CircularLayoutAlgorithm(center, new CircularLayoutAlgorithmSettings()));
+            new CircularCloudLayouter(new CircularLayoutAlgorithm(new CircularLayoutAlgorithmSettings()));
         addedRectangles = [];
     }
 

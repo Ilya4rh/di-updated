@@ -29,10 +29,18 @@ public class ImageDrawer : IImageDrawer
         
         foreach (var tag in tags)
         {
+            var font = new Font(tag.Font, tag.Size);
+            var color = new SolidBrush(colorGenerator.GetColor());
+            var rectangle = tag.Rectangle with
+            {
+                X = tag.Rectangle.X + imageSettings.Width / 2,
+                Y = tag.Rectangle.Y + imageSettings.Height / 2
+            };
+            
             graphics.DrawString(tag.Content, 
-                new Font(tag.Font, tag.Size), 
-                new SolidBrush(colorGenerator.GetColor()),
-                tag.Rectangle);
+                font, 
+                color,
+                rectangle);
         }
         return bitmap;
     }

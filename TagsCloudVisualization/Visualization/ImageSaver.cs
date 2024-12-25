@@ -19,7 +19,12 @@ public class ImageSaver : IImageSaver
         var fileName = settings.FileName;
         var imageFormat = GetImageFormat(settings.FileFormat);
         
-        bitmap.Save(Path.Combine(filePath, fileName), imageFormat);
+        if (!Directory.Exists(settings.FilePath))
+        {
+            Directory.CreateDirectory(settings.FilePath);
+        }
+
+        bitmap.Save(Path.Combine(filePath, $"{fileName}.{settings.FileFormat}"), imageFormat);
     }
 
     private static ImageFormat GetImageFormat(string format)

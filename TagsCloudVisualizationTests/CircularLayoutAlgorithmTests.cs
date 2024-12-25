@@ -18,7 +18,7 @@ public class CircularLayoutAlgorithmTests
         
         var action = () =>
         {
-            _ = new CircularLayoutAlgorithm(new Point(0, 0), settings);
+            _ = new CircularLayoutAlgorithm(settings);
         };
 
         action
@@ -34,7 +34,7 @@ public class CircularLayoutAlgorithmTests
         
         var action = () =>
         {
-            _ = new CircularLayoutAlgorithm(new Point(0, 0), settings);
+            _ = new CircularLayoutAlgorithm(settings);
         };
 
         action
@@ -43,25 +43,13 @@ public class CircularLayoutAlgorithmTests
             .WithMessage("The parameter 'stepIncreasingAngle' is zero");
     }
 
-    [TestCase(0, 0)]
-    [TestCase(-4, 5)]
-    public void CalculateNextPoint_ShouldPointIsCenter_WhenCalculateFirstPoint(int centerCoordinateX, int centerCoordinateY)
-    {
-        var center = new Point(centerCoordinateY, centerCoordinateY);
-        var circularLayoutAlgorithm = new CircularLayoutAlgorithm(center, new CircularLayoutAlgorithmSettings());
-
-        var nextPoint = circularLayoutAlgorithm.CalculateNextPoint();
-
-        nextPoint.Should().Be(center);
-    }
-
     [TestCase(2)]
     [TestCase(7)]
     public void CalculateNextPoint_ShouldIncreaseRadius_WhenCalculateTwoPoints(int stepIncreasingRadius)
     {
         var settings = new CircularLayoutAlgorithmSettings(stepIncreasingRadius: stepIncreasingRadius);
         var circularLayoutAlgorithm =
-            new CircularLayoutAlgorithm(new Point(0, 0), settings);
+            new CircularLayoutAlgorithm(settings);
 
         var firstPoint = circularLayoutAlgorithm.CalculateNextPoint();
         var secondPoint = circularLayoutAlgorithm.CalculateNextPoint();
@@ -77,7 +65,6 @@ public class CircularLayoutAlgorithmTests
         var stepIncreasingRadius = 2;
         var center = new Point(0, 0);
         var circularLayoutAlgorithm = new CircularLayoutAlgorithm(
-            center,
             new CircularLayoutAlgorithmSettings(stepIncreasingAngle, stepIncreasingRadius));
         
         _ = circularLayoutAlgorithm.CalculateNextPoint();
